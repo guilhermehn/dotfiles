@@ -1,0 +1,75 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<unique-id>1456699000269112-1</unique-id>
+	<command>termite</command>
+	<description>Launch terminal</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>preferences-system-search</icon>
+	<name>Search for files</name>
+	<unique-id>1456663633345317-2</unique-id>
+	<command>catfish --path=%f</command>
+	<description>Search for files</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>mp3tag</icon>
+	<name>Launch in MP3Tag</name>
+	<unique-id>1456663636849417-3</unique-id>
+	<command>mp3tag %N</command>
+	<description>Launch selected file in MP3Tag</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+	<audio-files/>
+</action>
+<action>
+	<icon>vim</icon>
+	<name>Open with NeoVIM</name>
+	<unique-id>1457421920586641-1</unique-id>
+	<command>termite --exec=&quot;nvim %N&quot;</command>
+	<description>Open selected file in NeoVIM Terminal mode</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>folder-lock</icon>
+	<name>Root folder</name>
+	<unique-id>1456663642361472-5</unique-id>
+	<command>gksu thunar %f</command>
+	<description>Open selected folder as root</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+</actions>

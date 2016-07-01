@@ -1,0 +1,20 @@
+#include "/home/rhs/.xres/urxvt"
+
+! ---------------------------------------------------
+! --> Rofi
+! ---------------------------------------------------
+rofi.bw: 4
+rofi.hide-scrollbar: true
+rofi.opacity: 95
+rofi.lines: 20
+rofi.location: 2
+rofi.font: CodeNewRoman 13
+rofi.padding: 10
+rofi.width: 55
+rofi.levenshtein-sort: false
+rofi.yoffset: 20
+rofi.terminal: termite
+rofi.color-enabled: true
+rofi.color-window: #212121,#1B5E20
+! State:           bg,     fg,     bgalt   hlbg,   hlfg
+rofi.color-normal: #212121,#FFFFFF,#383838,#f6f6f6,#1B5E20
