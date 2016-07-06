@@ -16,6 +16,3 @@ Core dotfiles from Arch Linux my workstation
 *dunst - notifications
 
 *mpd + ncmpcpp
-
-=======
-# dotfiles
