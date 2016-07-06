@@ -1,55 +1,51 @@
 #!/bin/bash
-# Based on http://openweathermap.org/current
 
-API_KEY="cee10606a7b99a0dd196adfae8366766"
+full=""
+short=""
+status=0
 
-# Check on http://openweathermap.org/find
-CITY_ID="${BLOCK_INSTANCE}"
+URL='http://www.accuweather.com/en/lv/riga/225780/current-weather/225780';
+SITE="$(curl -s "$URL")"
+FETCH_STATUS=$?;
 
-URGENT_LOWER=-25
-URGENT_HIGHER=35
-
-ICON_SUNNY=""
-ICON_CLOUDY=""
-ICON_RAINY=""
-ICON_STORM=""
-ICON_SNOW=""
-ICON_FOG=""
-
-SYMBOL_CELSIUS="℃"
-
-WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&APPID=${API_KEY}&units=metric"
-
-WEATHER_INFO=$(wget -qO- "${WEATHER_URL}")
-WEATHER_MAIN=$(echo "${WEATHER_INFO}" | grep -o -e '\"main\":\"[a-Z]*\"' | awk -F ':' '{print $2}' | tr -d '"')
-WEATHER_TEMP=$(echo "${WEATHER_INFO}" | grep -o -e '\"temp\":\-\?[0-9]*' | awk -F ':' '{print $2}' | tr -d '"')
-
-if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
-  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
-elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
-  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
-elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
-  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
-elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
-  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
-elif [[ "${WEATHER_MAIN}" = *Fog* ]] || [[ "${WEATHER_MAIN}" = *Mist* ]]; then
-  echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${ICON_FOG} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
+if [ $FETCH_STATUS -ne "0" -o -z "${SITE}" ]; then
+  full="N/A";
+  short="${full}";
+  status=0;
 else
-  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo "${WEATHER_MAIN} ${WEATHER_TEMP}${SYMBOL_CELSIUS}"
-  echo ""
-fi
+  weather="$(echo "$SITE" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $14 }'| head -1)"
+  daytime="$(echo "$SITE" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $2 }'| head -1)"
+  temp="$(echo "$SITE" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $10"°" }'| head -1)"
+  feel_temp="$(echo "$SITE" | awk -F\' '/acm_RecentLocationsCarousel\.push/{print $12"°" }'| head -1)"
 
-if [[ "${WEATHER_TEMP}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP}" -gt "${URGENT_HIGHER}" ]]; then
-  exit 33
-fi
+
+  if [[ $weather == *thunder* || $weather == *Thunder* ]]; then
+    icon=""
+  else
+    if [[ $weather == *rain* || $weather == *Rain* ]]; then
+      icon=""
+    else
+      if [[ $weather == *cloud* || $weather == *Cloud* ]]; then
+        icon=""
+      else
+        if [[ $weather == *snow* || $weather == *Snow* ]]; then
+          icon=""
+        else
+          if [[ $daytime == *night* || $daytime == *Night* ]]; then
+            icon=""
+          else
+            icon=""
+          fi
+        fi
+      fi
+    fi
+  fi
+
+  full="$icon $feel_temp"
+  short="$temp"
+fi;
+
+echo -e $full
+echo -e $short
+echo $color;
+exit $status

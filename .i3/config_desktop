@@ -1,0 +1,237 @@
+set $mod Mod1
+
+font pango:CodeNewRoman 11
+
+set $black       #212121
+set $darkblack   #000000
+set $red         #C62828
+set $darkred     #B71C1C
+set $green       #2E7D32
+set $darkgreen   #1B5E20
+set $yellow      #F9A825
+set $darkyellow  #F57F17
+set $blue        #1E88E5
+set $darkblue    #1976D2
+set $magenta     #6A1B9A
+set $darkmagenta #4A148C
+set $cyan        #00ACC1
+set $darkcyan    #0097A7
+set $white       #FFFFFF
+set $darkwhite   #FAFAFA
+set $background  #000000
+set $transparent #000000BB
+
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+#set $default_gaps_inner 20
+#set $default_gaps_outer 0
+#gaps inner $default_gaps_inner
+#gaps outer $default_gaps_outer
+
+#smart_gaps on
+smart_borders on
+
+workspace_auto_back_and_forth yes
+force_display_urgency_hint 0 ms
+focus_on_window_activation urgent
+
+floating_minimum_size -1 x -1
+floating_maximum_size -1 x -1
+
+#                       BORDER      BACKGROUND  TEXT   INDICATOR
+client.focused          $darkgreen  $darkgreen  $white $darkgreen
+client.unfocused        $black      $black      $white $black
+client.focused_inactive $black      $black      $white $black
+client.urgent           $red        $red        $white $red
+
+floating_modifier $mod
+
+bindsym $mod+Return exec termite
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+d exec rofi -show run
+bindsym $mod+Shift+d exec rofi -show window
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+h split h
+
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+plus scratchpad show
+
+bindsym $mod+Shift+s sticky toggle
+bindsym $mod+y fullscreen disable; floating enable; resize set 400 300; sticky enable; move window to position 1515 20
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+bindsym $mod+Tab workspace back_and_forth
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+set $mode_resize <span>        </span><span background='#F57F17' foreground='black'> resize </span> <span foreground='white'>l</span>eft <span foreground='white'>r</span>ight <span foreground='white'>u</span>p <span foreground='white'>d</span>own
+bindsym $mod+r mode "$mode_resize"
+mode --pango_markup "$mode_resize" {
+    bindsym Left resize shrink width 10 px or 1 ppt
+    bindsym Down resize grow height 10 px or 1 ppt
+    bindsym Up resize shrink height 10 px or 1 ppt
+    bindsym Right resize grow width 10 px or 1 ppt
+
+    bindsym Shift+Left resize shrink width 20 px or 5 ppt
+    bindsym Shift+Down resize grow height 20 px or 5 ppt
+    bindsym Shift+Up resize shrink height 20 px or 5 ppt
+    bindsym Shift+Right resize grow width 20 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_power <span>        </span><span background='#F57F17' foreground='black'> power </span> <span foreground='white'>l</span>ock <span foreground='white'>e</span>xit <span foreground='white'>s</span>uspend <span foreground='white'>r</span>eboot <span foreground='white'>p</span>oweroff
+mode --pango_markup "$mode_power" {
+    bindsym l mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit lock
+    bindsym e mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit logout
+    bindsym s mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit lock && $HOME/.i3/scripts/i3exit suspend
+    bindsym h mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit lock && $HOME/.i3/scripts/i3exit hibernate
+    bindsym r mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit reboot
+    bindsym p mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit shutdown
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode "$mode_power"
+
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [instance="__scratchpad"] floating enable
+
+for_window [class="(?i)pavucontrol"] floating enable, move position mouse
+for_window [class="(?i)lxappearance"] floating enable
+for_window [class="(?i)galculator"] floating enable
+for_window [class="(?i)VirtualBox" title="(?i)Manager"] floating enable
+
+
+new_float               pixel 4
+new_window              pixel 4
+
+bar {
+    status_command i3blocks -c ~/.i3/i3blocks/.i3blocks.conf
+    i3bar_command i3bar
+    position top
+    separator_symbol "|"
+    workspace_buttons yes
+    tray_output VGA-0
+    tray_padding 0
+    height 20
+
+    font pango: Terminus 11
+
+    colors {
+        statusline         $white
+        background         $transparent
+        separator          $darkgreen
+
+#                          BORDER       BACKGROUND   TEXT
+        focused_workspace  $darkgreen   $transparent $white
+        inactive_workspace $transparent $transparent $white
+        active_workspace   $transparent $transparent $white
+        urgent_workspace   $white       $transparent $white
+        binding_mode       $transparent $transparent $darkyellow
+    }
+}
+
+assign [class="(?i)qbittorrent"]                  $ws8
+assign [class="(?i)clementine"]                   $ws9
+assign [class="(?i)spotify"]                      $ws9
+assign [class="(?i)blockify-ui"]                  $ws9
+assign [class="(?i)pidgin"]                       $ws8
+assign [class="(?i)TeamSpeak 3"]                  $ws8
+assign [class="(?i)steam"]                        $ws10
+assign [class="(?i)syncthing"]                    $ws7
+assign [class="(?i)csgo_linux"]                   $ws6
+assign [class="(?i)insurgency_linux"]             $ws6
+
+
+# Startup programs
+exec_always --no-startup-id numlockx &
+exec --no-startup-id compton --config ~/.config/compton/compton.conf &
+exec --no-startup-id dunst -config file ~/.config/dunst/dunstrc &
+exec --no-startup-id redshift &
+exec --no-startup-id anamnesis --start &
+exec --no-startup-id nm-applet &
+exec --no-startup-id menutray -g -i
+
+#exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/rotation/*
+exec_always --no-startup-id feh --bg-fill ~/Pictures/Wallpapers/guq95s2.jpg
+
+# Screenshots
+bindsym --release Print exec "maim -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
+bindsym --release Shift+Print exec "maim -s -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
+
+bindsym $mod+n exec --no-startup-id thunar
+bindsym $mod+b exec --no-startup-id chromium

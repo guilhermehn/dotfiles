@@ -1,14 +1,14 @@
 #!/usr/bin/python
 
-max_length = 70
+max_length = 80
+
 def truncate(string):
-    if len(string) < max_length:
-        spaces = int((max_length - len(string)) / 2)
-        return spaces * " " + string + spaces * " "
-    else:
+    if len(string) > max_length:
         start = string[0:int(max_length / 2)]
         end = string[-int(max_length / 2):]
-        return start + "..." + end + " "
+        return start + "..." + end
+    else:
+        return string
 
 while True:
     string = input()

@@ -1,17 +1,15 @@
 [options]
 font = CodeNewRoman 12
-scroll_on_output = false
-scroll_on_keystroke = true
-audible_bell = false
-mouse_autohide = false
-allow_bold = true
+cursor_blink = off
+browser = chromium
+clickable_url = false
 dynamic_title = true
+geometry = 1000x600
+scrollback_lines = 999999
+scroll_on_keystroke = true
+scroll_on_output = false
 urgent_on_bell = true
-clickable_url = true
 
-scrollback_lines = 10000
-search_wrap = true
-cursor_blink = on
 ## Dark gruvbox theme
 [colors]
 background = #1d2021
@@ -51,5 +49,3 @@ color14 = #8ec07c
 # light4 + light1
 color7 = #a89984
 color15 = #ebdbb2
-
-# vim: ft=dosini cms=#%s

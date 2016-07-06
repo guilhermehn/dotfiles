@@ -1,20 +1,76 @@
-#!/usr/bin/env bash
+#!/usr/bin/perl
+#
+# Copyright 2014 Pierre Mavro <deimos@deimos.fr>
+# Copyright 2014 Vivien Didelot <vivien@didelot.org>
+#
+# Licensed under the terms of the GNU GPL v3, or any later version.
+#
+# This script is meant to use with i3blocks. It parses the output of the "acpi"
+# command (often provided by a package of the same name) to read the status of
+# the battery, and eventually its remaining time (to full charge or discharge).
+#
+# The color will gradually change for a percentage below 85%, and the urgency
+# (exit code 33) is set if there is less that 5% remaining.
 
-ACPI=$(acpi -b)
-CHARGE=$(echo -n "${ACPI}" | egrep -o "[0-9]+%" | sed -e "s,%,,g")
+use strict;
+use warnings;
+use utf8;
 
-STATE=""
-if grep -q "Charging\|Full" <(echo "${ACPI}" | awk '{ gsub("Unknown","Charging",$3); print $3}'); then
-    STATE=""
-else
-    STATE=$(echo "${ACPI}" | awk -F' ' '{print $5}' | awk -F':' '{print $1":"$2}')
-    STATE=" (${STATE}h)"
-fi
+my $acpi;
+my $status;
+my $percent;
+my $full_text;
+my $short_text;
+my $bat_number = $ENV{BLOCK_INSTANCE} || 0;
 
-LEVEL=$(( (CHARGE - 1) / 20 ))
-ICON="f$(( 244 - LEVEL ))"
+# read the first line of the "acpi" command output
+open (ACPI, "acpi -b | grep 'Battery $bat_number' |") or die;
+$acpi = <ACPI>;
+close(ACPI);
 
-echo -e "\u${ICON}  ${CHARGE}%${STATE}"
+# fail on unexpected output
+if ($acpi !~ /: (\w+), (\d+)%/) {
+	die "$acpi\n";
+}
 
-[[ "${LEVEL}" = "0" ]] && exit 33
-exit 0
+$status = $1;
+$percent = $2;
+$full_text = "$percent%";
+
+if ($status eq 'Discharging') {
+	$full_text .= ' DIS';
+} elsif ($status eq 'Charging') {
+	$full_text .= ' CHR';
+}
+
+$short_text = $full_text;
+
+if ($acpi =~ /(\d\d:\d\d):/) {
+	$full_text .= " ($1)";
+}
+
+# print text
+print "$full_text\n";
+print "$short_text\n";
+
+# consider color and urgent flag only on discharge
+if ($status eq 'Discharging') {
+
+	if ($percent < 30) {
+		print "#FF0000\n";
+	} elsif ($percent < 40) {
+		print " #FFAE00\n";
+	} elsif ($percent < 60) {
+		print "#FFF600\n";
+	} elsif ($percent < 85) {
+		print "#A8FF00\n";
+	}
+
+	if ($percent < 25) {
+		exit(33);
+	}
+} elsif ($status eq 'Charging') {
+    print "#00FF00\n";
+}
+
+exit(0);

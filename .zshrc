@@ -90,3 +90,4 @@ alias sshfsrpiweb='sshfs -p 22 rhs@192.168.1.47:/srv/http ~/Documents/SSH/WWW'
 alias sshlaptop='ssh -p 2222 rhs@192.168.1.46'
 alias stopvpn='sudo systemctl stop openvpn@US_New_York_City.service'
 alias startvpn='sudo systemctl start openvpn@US_New_York_City.service'
+alias pacupdate="sudo pacman -Syu && pacaur -Su"

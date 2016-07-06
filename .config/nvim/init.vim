@@ -1,17 +1,11 @@
-set nocompatible
-filetype off
-
-set title
-set clipboard=unnamedplus "enable copying from system buffer
-
-" Treat long lines as break lines
-map j gj
-map k gk
+" Used F keys:
+" F1, F3, F4, F5, F8, F9
 
 "
 " VimPlug options
 "
 call plug#begin()
+Plug 'sheerun/vimrc'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'bling/vim-bufferline'
@@ -22,7 +16,7 @@ Plug 'tpope/vim-surround'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'vim-scripts/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'bronson/vim-trailing-whitespace'
@@ -37,85 +31,55 @@ Plug 'vim-scripts/comments.vim'
 Plug 'jeetsukumaran/vim-buffergator'
 
 Plug 'scrooloose/syntastic'
-Plug 'pangloss/vim-javascript'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'vim-scripts/Better-CSS-Syntax-for-Vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'gregsexton/matchtag'
+"Plug 'shawncplus/phpcomplete.vim'
 call plug#end()
 
-
-set history=400
-syntax on
+"enable copy/paste from system buffer
+set clipboard=unnamedplus
 
 "
 " Color options
 "
+let g:gruvbox_italic=1
 colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_light = 'soft'
 set background=dark
-"Transparent background fix
-hi Normal guibg=NONE ctermbg=NONE
-" Switch between light and dark background
-map <silent> <F7> :call gruvbox#bg_toggle()<CR>
-imap <silent> <F7> <ESC>:call gruvbox#bg_toggle()<CR>a
-vmap <silent> <F7> <ESC>:call gruvbox#bg_toggle()<CR>gv
-
-set encoding=utf-8
-set number "Line numbers
-set showcmd
-set autoread
-set cmdheight=1
-
-" Ignore case when searching
-set ignorecase
-set smartcase
-
-set hlsearch
-set magic
-
-set mat=2
-set showmatch
-set noerrorbells
-set novisualbell
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-" Use spaces instead of tabs
-set expandtab
-
-" 1 tab == 2 spaces
-set shiftwidth=2
-set tabstop=2
-
-" Linebreak
-set lbr
-set tw=150
-
-"line up soft-wrap prefix with the line numbers
-"set cpoptions+=n "start soft-wrap lines (and any prefix) in the line-number area
-
-set si "Smart indent
-"set wrap "Wrap line
-set breakindent
-
-filetype plugin on
-filetype indent on
-filetype plugin indent on
-
-"save read-only files
-noremap <F4> :w !sudo tee %<CR>
-
-"save file quickly
-noremap <F2> :w<CR>
 
 " Insert newline in Normal mode
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
+" Close current buffer
+command Bd bp | sp | bn | bd
+
+" Linebreak
+set tw=100
+
+set colorcolumn=+1        " highlight column after 'textwidth'
+set colorcolumn=+1,+2,+3  " highlight three columns after 'textwidth'
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+set colorcolumn=100
+
+"
+" Autoformat options
+"
+noremap <silent> <F3> :Autoformat<CR>
+
+"save read-only files
+noremap <F4> :w !sudo tee %<CR>
+
 " Toggle line numbers
 noremap <F5> :set invnumber<CR>
 inoremap <F5> <C-O>:set invnumber<CR>
+
+"
+" Tagbar options
+"
+nnoremap <silent> <F8> :TagbarToggle<CR>
 
 "
 " NerdTree options
@@ -123,25 +87,23 @@ inoremap <F5> <C-O>:set invnumber<CR>
 noremap <silent> <F9> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close window if NerdTree is the last to stand
 
-" Close current buffer
-command Bd bp | sp | bn | bd
-
 "
 " Airline options
 "
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
 "
 " IndentLine options
 "
 let g:indentLine_char = '¦'
 let g:indentLine_enabled = 1
+let g:indentLine_color_gui = '#7f7061'
 
 
 "
 " YouCompleteMe options
-""
-"let g:ycm_key_invoke_completion = '<Right>'
+"
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
@@ -151,6 +113,9 @@ let g:ycm_min_num_of_chars_for_completion = 1
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '⚠'
 
+"
+" UltiSnips options
+"
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger       =        '<tab>'
 let g:UltiSnipsListSnippets         =       '<c-tab>'
@@ -158,24 +123,14 @@ let g:UltiSnipsJumpForwardTrigger    =      '<c-j>'
 let g:UltiSnipsJumpBackwardTrigger    =     '<c-k>'
 
 "
-" Autoformat options
-"
-noremap <silent> <F3> :Autoformat<CR>
-
-"
-" Tagbar options
-"
-nnoremap <silent> <F8> :TagbarToggle<CR>
-
-"
 " Vim-Tags options
 "
-
 "Generate tags on file save
 let g:vim_tags_auto_generate = 1
 
-
-"Syntastic
+"
+" Syntastic options
+"
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -194,14 +149,15 @@ let g:syntastic_enable_balloons = 1
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_jump = 2
 "let g:syntastic_loc_list_height = 1
+"
 let g:syntastic_html_checkers = ['tidy']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_css_checkers = ['prettycss']
+let g:syntastic_php_checkers = ['php', 'phpmd']
+let g:syntastic_python_checkers = ['pylint']
 
 let g:syntastic_css_prettycss_args = "--ignore=suggest-relative-unit"
 let g:syntastic_javascript_eslint_args = "--config /home/rhs/.config/eslint/config.json"
+let g:syntastic_php_phpmd_args = "text cleancode,codesize,design,unusedcode,controversial"
 
 let b:syntastic_mode = "active"
-
-" Used F keys:
-" F1, F2, F3, F4, F7, F8, F9

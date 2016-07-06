@@ -48,18 +48,18 @@ END {
 	pct=used/total*100
 
 	# full text
-	printf("%.1fG/%.1fG (%.f%)\n", used, total, pct)
+	#printf("%.1fG/%.1fG (%.f%)\n", used, total, pct)
+	printf("%.1fG/%.1fG\n", used, total)
 
 	# short text
-	printf("%.f%\n", pct)
+	#printf("%.f%\n", pct)
+	#printf("%.f%\n")
 
 	# color
 	if (pct > 90) {
-		print("#FF0000\n")
-	} else if (pct > 80) {
-		print("#FFAE00\n")
-	} else if (pct > 70) {
-		print("#FFF600\n")
+		print("#C70000\n")
+	} else if (pct > 75) {
+		print("#F2FF5F\n")
 	}
 }
 ' /proc/meminfo
