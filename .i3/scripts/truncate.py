@@ -2,6 +2,7 @@
 
 max_length = 80
 
+
 def truncate(string):
     if len(string) > max_length:
         start = string[0:int(max_length / 2)]
