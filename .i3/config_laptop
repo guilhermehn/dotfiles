@@ -1,6 +1,4 @@
-set $mod Mod1
-
-font pango:Source Code Pro Medium 9
+######################## Define color / workspace variables for further use ########################
 
 set $black       #212121
 set $darkblack   #000000
@@ -32,6 +30,13 @@ set $ws8  "8"
 set $ws9  "9"
 set $ws10 "10"
 
+####################################################################################################
+
+# Set Alt as mod key
+set $mod Mod1
+font pango:CodeNewRoman 11
+
+## Set gaps between windows
 #set $default_gaps_inner 20
 #set $default_gaps_outer 0
 #gaps inner $default_gaps_inner
@@ -53,56 +58,56 @@ client.unfocused        $black      $black      $white $black
 client.focused_inactive $black      $black      $white $black
 client.urgent           $red        $red        $white $red
 
+# Enable $mod+Mouse dragging floating windows
 floating_modifier $mod
 
 bindsym $mod+Return exec termite
 
+# Close selected window
 bindsym $mod+Shift+q kill
 
+# Program launcher (https://github.com/DaveDavenport/rofi)
 bindsym $mod+d exec rofi -show run
 bindsym $mod+Shift+d exec rofi -show window
 
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
+# Select window in current workspace
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
+# Move window in current workspace
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 bindsym $mod+h split h
-
 bindsym $mod+v split v
-
 bindsym $mod+f fullscreen toggle
 
+# Switch tiling modes
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
+# Enable floating / Switch between floating and tiled windows
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
+# Select multiple windows
 bindsym $mod+a focus parent
 bindsym $mod+Shift+a focus child
 
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+plus scratchpad show
 
+# Float window and pin in to top-right corner (1366x768)
 bindsym $mod+Shift+s sticky toggle
+bindsym $mod+y fullscreen disable; floating enable; resize set 400 300; sticky enable;\
+move window to position 961 20
 
+# Switch to X workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -115,6 +120,7 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 bindsym $mod+Tab workspace back_and_forth
 
+# Move selected window to X workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -129,38 +135,60 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
-set $mode_resize <span>        </span><span background='#F57F17' foreground='black'> resize </span> <span foreground='white'>l</span>eft <span foreground='white'>r</span>ight <span foreground='white'>u</span>p <span foreground='white'>d</span>own
-bindsym $mod+r mode "$mode_resize"
+# Resize selected windows
+set $mode_resize \
+<span>        </span>\
+<span background='#2E7D32' foreground='black'>  Resize </span> \
+<span foreground='white'>L</span>eft \
+<span foreground='white'>R</span>ight \
+<span foreground='white'>U</span>p \
+<span foreground='white'>D</span>own
 mode --pango_markup "$mode_resize" {
-    bindsym Left resize shrink width 10 px or 1 ppt
-    bindsym Down resize grow height 10 px or 1 ppt
-    bindsym Up resize shrink height 10 px or 1 ppt
-    bindsym Right resize grow width 10 px or 1 ppt
+  bindsym Left resize shrink width 10 px or 1 ppt
+  bindsym Down resize grow height 10 px or 1 ppt
+  bindsym Up resize shrink height 10 px or 1 ppt
+  bindsym Right resize grow width 10 px or 1 ppt
 
-    bindsym Shift+Left resize shrink width 20 px or 5 ppt
-    bindsym Shift+Down resize grow height 20 px or 5 ppt
-    bindsym Shift+Up resize shrink height 20 px or 5 ppt
-    bindsym Shift+Right resize grow width 20 px or 5 ppt
+  bindsym Shift+Left resize shrink width 20 px or 5 ppt
+  bindsym Shift+Down resize grow height 20 px or 5 ppt
+  bindsym Shift+Up resize shrink height 20 px or 5 ppt
+  bindsym Shift+Right resize grow width 20 px or 5 ppt
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
+bindsym $mod+r mode "$mode_resize"
 
-set $mode_power <span>        </span><span background='#F57F17' foreground='black'> power </span> <span foreground='white'>l</span>ock <span foreground='white'>e</span>xit <span foreground='white'>s</span>uspend <span foreground='white'>r</span>eboot <span foreground='white'>p</span>oweroff
+## Power menu
+# Dependencies:
+# https://github.com/Arcaena/i3lock-color
+# https://github.com/meskarune/i3lock-fancy
+# pm-utils
+set $mode_power \
+<span>        </span>\
+<span background='#2E7D32' foreground='black'>  Power </span> \
+<span foreground='white'>L</span>ock \
+<span foreground='white'>E</span>xit \
+<span foreground='white'>S</span>uspend \
+<span foreground='white'>R</span>eboot \
+<span foreground='white'>P</span>oweroff
 mode --pango_markup "$mode_power" {
-    bindsym l mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit lock
-    bindsym e mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit logout
-    bindsym s mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit lock && $HOME/.i3/scripts/i3exit suspend
-    bindsym h mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit hibernate
-    bindsym r mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit reboot
-    bindsym p mode "default", exec --no-startup-id $HOME/.i3/scripts/i3exit shutdown
+  bindsym l mode "default", exec --no-startup-id ~/.i3/scripts/i3exit lock
+  bindsym e mode "default", exec --no-startup-id ~/.i3/scripts/i3exit logout
+  bindsym s mode "default", exec --no-startup-id ~/.i3/scripts/i3exit lock &&\
+  ~/.i3/scripts/i3exit suspend
+  bindsym h mode "default", exec --no-startup-id ~/.i3/scripts/i3exit lock &&\
+  ~/.i3/scripts/i3exit hibernate
+  bindsym r mode "default", exec --no-startup-id ~/.i3/scripts/i3exit reboot
+  bindsym p mode "default", exec --no-startup-id ~/.i3/scripts/i3exit shutdown
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 bindsym $mod+Pause mode "$mode_power"
 
 
+# Enable floating for dialogs, pop-ups etc.
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -168,44 +196,14 @@ for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 for_window [instance="__scratchpad"] floating enable
-
 for_window [class="(?i)pavucontrol"] floating enable, move position mouse
 for_window [class="(?i)lxappearance"] floating enable
 for_window [class="(?i)galculator"] floating enable
-for_window [class="(?i)VirtualBox" title="(?i)Manager"] floating enable
 
-
+# Window border width
 new_float               pixel 4
 new_window              pixel 4
 
-bar {
-    status_command i3blocks -c ~/.i3/i3blocks/.i3blocks.conf
-    i3bar_command i3bar
-    position top
-    separator_symbol "|"
-    workspace_buttons yes
-    tray_output LVDS1
-    tray_padding 0
-    height 20
-
-    font pango: Terminus 9
-
-    colors {
-        statusline         $white
-        background         $transparent
-        separator          $darkgreen
-
-#                          BORDER       BACKGROUND   TEXT
-        focused_workspace  $darkgreen   $transparent $white
-        inactive_workspace $transparent $transparent $white
-        active_workspace   $transparent $transparent $white
-        urgent_workspace   $white       $transparent $white
-        binding_mode       $transparent $transparent $darkyellow
-    }
-}
-
-
-assign [class="(?i)termite" window_role="ncmpcpp"] $ws9
 assign [class="(?i)qbittorrent"]                   $ws8
 assign [class="(?i)clementine"]                    $ws9
 assign [class="(?i)spotify"]                       $ws9
@@ -215,9 +213,25 @@ assign [class="(?i)TeamSpeak 3"]                   $ws8
 assign [class="(?i)steam"]                         $ws10
 assign [class="(?i)syncthing"]                     $ws7
 
+# Default workspaces
+assign [class="(?i)syncthing"]                    $ws7
+# Music
+assign [class="(?i)clementine"]                   $ws9
+assign [class="(?i)spotify"]                      $ws9
+assign [class="(?i)blockify-ui"]                  $ws9
+assign [class="(?i)termite" window_role="ncmpcpp"] $ws9
+# Comms/Torrent
+assign [class="(?i)pidgin"]                       $ws8
+assign [class="(?i)TeamSpeak 3"]                  $ws8
+assign [class="(?i)qbittorrent"]                  $ws8
+# Games
+assign [class="(?i)csgo_linux"]                   $ws6
+assign [class="(?i)insurgency_linux"]             $ws6
+assign [class="(?i)steam"]                        $ws10
+
 # Startup programs
 exec --no-startup-id numlockx &
-exec --no-startup-id termite --exec=ncmpcpp --title=ncmpcpp --role=ncmpcpp &
+#exec --no-startup-id termite --exec=ncmpcpp --title=ncmpcpp --role=ncmpcpp &
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf &
 exec --no-startup-id dunst -config file ~/.config/dunst/dunstrc &
 exec --no-startup-id redshift &
@@ -225,12 +239,17 @@ exec --no-startup-id anamnesis --start &
 exec --no-startup-id nm-applet &
 exec --no-startup-id menutray -g -i
 
-# Set background
-exec --no-startup-id feh --bg-fill $HOME/Pictures/Wallpapers/guq95s2.jpg
+# One wallpaper or change between several on restart
+exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/KDE/*
+#exec_always --no-startup-id feh --bg-fill ~/Pictures/Wallpapers/guq95s2.jpg
 
 # Screenshots
 bindsym --release Print exec "maim -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
 bindsym --release Shift+Print exec "maim -s -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
+
+# Keybingings for opening WEB browser / File browser
+bindsym $mod+n exec --no-startup-id nemo
+bindsym $mod+b exec --no-startup-id chromium
 
 # Reduce/increase screen brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10%; pkill -SIGRTMIN+2 i3blocks"
@@ -242,6 +261,32 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "pulseaudio-ctl up 5; pkill -S
 bindsym XF86AudioLowerVolume exec --no-startup-id "pulseaudio-ctl down 5; pkill -SIGRTMIN+1 i3blocks"
 bindsym XF86AudioMute exec --no-startup-id "pulseaudio-ctl mute; pkill -SIGRTMIN+1 i3blocks"
 
-# Program keybindings
-bindsym $mod+n exec thunar
-bindsym $mod+b exec chromium
+########################################## i3bar settings ##########################################
+
+bar {
+  status_command i3blocks -c ~/.i3/i3blocks/.i3blocks.conf
+  i3bar_command i3bar
+  position top
+  separator_symbol "|"
+  workspace_buttons yes
+  tray_output LVDS1
+  tray_padding 0
+  height 20
+  font pango: Terminus 9
+
+  colors
+  {
+    statusline         $white
+    background         $transparent
+    separator          $darkgreen
+
+#                      BORDER       BACKGROUND   TEXT
+    focused_workspace  $darkgreen   $transparent $white
+    inactive_workspace $transparent $transparent $white
+    active_workspace   $transparent $transparent $white
+    urgent_workspace   $white       $transparent $white
+    binding_mode       $transparent $transparent $green
+  }
+}
+
+####################################################################################################
