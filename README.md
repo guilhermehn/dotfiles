@@ -9,10 +9,13 @@ Core dotfiles from Arch Linux my workstation
 
 *Termite - current terminal
 
-*urxvt (rxvt-unicode-256xresources)
+*urxvt (AUR: rxvt-unicode-patched)
 
-*compton - display compositor
+*compton - display compositor (https://github.com/chjj/compton)
 
-*dunst - notifications
+*dunst - notifications (https://github.com/knopwob/dunst)
 
 *mpd + ncmpcpp
+
+
+Some of dotfiles are based on Airblader's config (https://github.com/Airblader/dotfiles-manjaro)
