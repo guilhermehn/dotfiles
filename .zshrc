@@ -1,14 +1,14 @@
-# Path to your oh-my-zsh installation.
 export ZSH=/home/rhs/.oh-my-zsh
 DISABLE_AUTO_UPDATE=true
 ZSH_THEME="ys"
 
+# Requires
+# https://github.com/zsh-users/zsh-syntax-highlighting and
+# https://github.com/zsh-users/zsh-autosuggestions
 plugins=(git sudo common-aliases zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
-
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
-#export HTML_TIDY="/home/rhs/.config/tidy-html5/conf.txt"
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export VISUAL="vim"
 export WINEPREFIX=$HOME/.WF_x64
@@ -16,7 +16,6 @@ export WINEPREFIX=$HOME/.WF_x64
 source $ZSH/oh-my-zsh.sh
 
 # dirstack handling
-
 DIRSTACKSIZE=${DIRSTACKSIZE:-20}
 DIRSTACKFILE=${DIRSTACKFILE:-${ZDOTDIR:-${HOME}}/.zdirs}
 
@@ -77,17 +76,14 @@ setopt pushdminus
 
 
 alias gc++='g++ -std=c++11 -g -O2 -Wall -Wextra -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wcast-qual -Wswitch-default -Wswitch-enum -Wconversion -Wunreachable-code -Winit-self -Wuninitialized -Winline -fsanitize=address -fno-omit-frame-pointer'
-alias compall='gc++ *.cpp -o'
-alias compmain='gc++ main.cpp -o main'
 alias gentags='ctags -R --c++-kinds=+p --fields=+iaS --extra=+q'
 alias c++dir='~/bin/./cppwork'
 alias ds='dirs -v'
 alias wine_x64='WINEPREFIX=~/.WF_x64'
 alias wine_x32='WINEARCH=win32 WINEPREFIX=~/.WF_x32'
 alias sshrpi='TERM=xterm ssh -p 22 rhs@192.168.1.47'
-alias sshfsrpi='sshfs -p 22 rhs@192.168.1.47:/ ~/Documents/SSH/ROOT'
+alias sshfsrpiroot='sshfs -p 22 rhs@192.168.1.47:/ ~/Documents/SSH/ROOT'
 alias sshfsrpiweb='sshfs -p 22 rhs@192.168.1.47:/srv/http ~/Documents/SSH/WWW'
-alias sshlaptop='ssh -p 2222 rhs@192.168.1.46'
 alias stopvpn='sudo systemctl stop openvpn@US_New_York_City.service'
 alias startvpn='sudo systemctl start openvpn@US_New_York_City.service'
-alias pacupdate="sudo pacman -Syu && pacaur -Su"
+alias update='sudo pacman -Syu && pacaur -Su'
