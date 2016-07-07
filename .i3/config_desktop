@@ -223,7 +223,7 @@ assign [class="(?i)steam"]                        $ws10
 
 
 # Startup programs
-exec_always --no-startup-id numlockx &
+exec --no-startup-id numlockx &
 exec --no-startup-id compton --config ~/.config/compton/compton.conf &
 exec --no-startup-id dunst -config file ~/.config/dunst/dunstrc &
 exec --no-startup-id redshift &
