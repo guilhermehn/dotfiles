@@ -1,5 +1,11 @@
 " Used F keys:
-" F1, F3, F4, F5, F8, F9
+" F1, F2, F3, F4, F5, F8, F9
+
+" On my way to becoming 1337 VIM user
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 "
 " VimPlug options
@@ -52,6 +58,12 @@ set background=dark
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
+" Deafault <leader> key
+let mapleader=","
+
+" Execute commands in 2 less steps (Hold-Release shift)
+nnoremap ; :
+
 " Close current buffer
 command Bd bp | sp | bn | bd
 
@@ -75,10 +87,13 @@ set foldlevelstart=10   " open most folds by default
 set foldnestmax=10      " 10 nested fold max
 
 " Allow easy navigation between wrapped lines (For arrows)
-map <silent> <Up> gk
-imap <silent> <Up> <C-o>gk
-map <silent> <Down> gj
-imap <silent> <Down> <C-o>gj
+"map <silent> <Up> gk
+"imap <silent> <Up> <C-o>gk
+"map <silent> <Down> gj
+"imap <silent> <Down> <C-o>gj
+
+" Toggle Paste mode
+set pastetoggle=<F2>
 
 "
 " Autoformat options
