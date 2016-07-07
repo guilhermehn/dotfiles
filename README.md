@@ -5,9 +5,9 @@ Core dotfiles from Arch Linux my workstation
 
 *zsh with oh-my-zsh (https://github.com/robbyrussell/oh-my-zsh)
 
-*NeoVIM
+*NeoVIM (https://github.com/neovim/neovim)
 
-*Termite - current terminal
+*Termite - current terminal (https://github.com/thestinger/termite)
 
 *urxvt (AUR: rxvt-unicode-patched)
 
@@ -16,6 +16,5 @@ Core dotfiles from Arch Linux my workstation
 *dunst - notifications (https://github.com/knopwob/dunst)
 
 *mpd + ncmpcpp
-
 
 Some of dotfiles are based on Airblader's config (https://github.com/Airblader/dotfiles-manjaro)
