@@ -18,3 +18,5 @@ Core dotfiles from Arch Linux my workstation
 *mpd + ncmpcpp
 
 Some of dotfiles are based on Airblader's config (https://github.com/Airblader/dotfiles-manjaro)
+
+![Example screenshot](https://raw.githubusercontent.com/rhssk/dotfiles/master/2016-07-07-194736_1920x1080_scrot.png)
