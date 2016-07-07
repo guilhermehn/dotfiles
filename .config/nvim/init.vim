@@ -9,7 +9,7 @@ Plug 'sheerun/vimrc'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'bling/vim-bufferline'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-complete --tern-completer' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
@@ -29,12 +29,11 @@ Plug 'vim-scripts/a.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/comments.vim'
 Plug 'jeetsukumaran/vim-buffergator'
-
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'gregsexton/matchtag'
-"Plug 'shawncplus/phpcomplete.vim'
+Plug 'ternjs/tern_for_vim'
 call plug#end()
 
 "enable copy/paste from system buffer
@@ -59,10 +58,27 @@ command Bd bp | sp | bn | bd
 " Linebreak
 set tw=100
 
-set colorcolumn=+1        " highlight column after 'textwidth'
-set colorcolumn=+1,+2,+3  " highlight three columns after 'textwidth'
+" Draw vertical line after tw to suggest a line wrap
+set colorcolumn=+1
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
-set colorcolumn=100
+
+" Overrides any other configuration in plugins. Enabling line
+" highlighting causes extremely high CPU usage on medium+ size files
+set nocursorline
+
+" Redraw screen only on typing
+set lazyredraw
+
+nnoremap <space> za
+" fold by indent set in sheerun/vimrc
+set foldlevelstart=10   " open most folds by default
+set foldnestmax=10      " 10 nested fold max
+
+" Allow easy navigation between wrapped lines (For arrows)
+map <silent> <Up> gk
+imap <silent> <Up> <C-o>gk
+map <silent> <Down> gj
+imap <silent> <Down> <C-o>gj
 
 "
 " Autoformat options
@@ -85,7 +101,8 @@ nnoremap <silent> <F8> :TagbarToggle<CR>
 " NerdTree options
 "
 noremap <silent> <F9> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close window if NerdTree is the last to stand
+"close window if NerdTree is the last to stand
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "
 " Airline options
@@ -99,14 +116,16 @@ let g:airline#extensions#tabline#enabled = 1
 let g:indentLine_char = '¦'
 let g:indentLine_enabled = 1
 let g:indentLine_color_gui = '#7f7061'
-
+" Supposed to help with performance, might break indenting in JS files
+let g:indentLine_faster = 1
 
 "
 " YouCompleteMe options
 "
 let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+"where to search for .ycm_extra_conf.py if not found
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_server_python_interpreter = '/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_of_chars_for_completion = 1
