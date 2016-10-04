@@ -16,10 +16,14 @@ fi
 
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources && xrdb -merge -I$HOME ~/.xres/urxvt
 
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-export QT_STYLE_OVERRIDE='gtk2'
+# GTK style for QT applications
+export QT_QPA_PLATFORMTHEME='gtk2'
 
+# LV keyboard layout with diacritics under apostrophe key
 setxkbmap -layout lv -variant apostrophe -option ctrl:nocaps
 
-xset m 1/1 0
+# Disable mouse acceleration
+xset m 0 0
+
+# Start WM
 exec i3
