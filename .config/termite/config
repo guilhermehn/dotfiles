@@ -1,10 +1,10 @@
 [options]
-font = CodeNewRoman 12
+#font = CodeNewRoman 12
+font = Knack Nerd Font 10.5
 cursor_blink = off
 browser = chromium
 clickable_url = false
 dynamic_title = true
-geometry = 1000x600
 scrollback_lines = 999999
 scroll_on_keystroke = true
 scroll_on_output = false

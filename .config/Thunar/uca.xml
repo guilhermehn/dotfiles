@@ -35,19 +35,6 @@
 	<video-files/>
 </action>
 <action>
-	<icon>mp3tag</icon>
-	<name>Launch in MP3Tag</name>
-	<unique-id>1456663636849417-3</unique-id>
-	<command>mp3tag %N</command>
-	<description>Launch selected file in MP3Tag</description>
-	<upper>-1</upper>
-	<lower>-1</lower>
-	<patterns>*</patterns>
-	<startup-notify/>
-	<directories/>
-	<audio-files/>
-</action>
-<action>
 	<icon>vim</icon>
 	<name>Open with NeoVIM</name>
 	<unique-id>1457421920586641-1</unique-id>
@@ -71,5 +58,57 @@
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
+</action>
+<action>
+	<icon>clamtk</icon>
+	<name>Scan for viruses</name>
+	<unique-id>1471610670727299-1</unique-id>
+	<command>termite --hold --exec=&quot;clamscan --recursive=yes --infected --move=/home/rhs/Documents/C_VAULT --max-filesize=2000M --max-scansize=2000M %F&quot;</command>
+	<description>Scan selected files/folders with ClamAV</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>meld</icon>
+	<name>Compare files</name>
+	<unique-id>1468230906967425-4</unique-id>
+	<command>meld %F</command>
+	<description>Compare selected files with Meld</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>application-image-gif</icon>
+	<name>Convert video to GIF</name>
+	<unique-id>1468231615915577-1</unique-id>
+	<command>~/bin/thunar-video-to-gif.sh -f %f</command>
+	<description>Convert selected video to GIF with ffmpeg</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<video-files/>
+</action>
+<action>
+	<icon>multimedia-video-player</icon>
+	<name>Media info</name>
+	<unique-id>1468233654124185-1</unique-id>
+	<command>~/bin/thunar-media-info.sh -f %f</command>
+	<description>Display info about music/video file</description>
+	<upper>-1</upper>
+	<lower>-1</lower>
+	<patterns>*</patterns>
+	<audio-files/>
+	<video-files/>
 </action>
 </actions>

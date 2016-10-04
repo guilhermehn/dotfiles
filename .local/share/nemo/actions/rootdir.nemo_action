@@ -1,8 +1,0 @@
-[Nemo Action]
-Active=true
-Name=Root folder
-Comment=Open selected folder as root user
-Exec=gksu nemo %F
-Icon-Name=folder-lock
-Selection=S
-Extensions=any;

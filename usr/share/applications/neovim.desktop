@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=NeoVIM
+Comment=Open NeoVIM
+Exec=termite --exec="nvim %f"
+Icon=vim
+Type=Application
+Categories=GTK;System;TerminalEmulator;
+StartupNotify=true

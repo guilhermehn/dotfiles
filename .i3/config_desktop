@@ -1,4 +1,4 @@
-######################## Define color / workspace variables for further use ########################
+######################## Define color / workspace variables ########################
 
 set $black       #212121
 set $darkblack   #000000
@@ -34,13 +34,15 @@ set $ws10 "10"
 
 # Set Alt as mod key
 set $mod Mod1
-font pango:CodeNewRoman 11
+set $super Mod4
+
+font pango:CodeNewRoman 13
 
 ## Set gaps between windows
-#set $default_gaps_inner 20
-#set $default_gaps_outer 0
-#gaps inner $default_gaps_inner
-#gaps outer $default_gaps_outer
+set $default_gaps_inner 10
+set $default_gaps_outer 0
+gaps inner $default_gaps_inner
+gaps outer $default_gaps_outer
 
 #smart_gaps on
 smart_borders on
@@ -54,8 +56,8 @@ floating_maximum_size -1 x -1
 
 #                       BORDER      BACKGROUND  TEXT   INDICATOR
 client.focused          $darkgreen  $darkgreen  $white $darkgreen
-client.unfocused        $black      $black      $white $black
-client.focused_inactive $black      $black      $white $black
+client.unfocused        $darkblack  $darkblack  $white $black
+client.focused_inactive $darkblack  $darkblack  $white $black
 client.urgent           $red        $red        $white $red
 
 # Enable $mod+Mouse dragging floating windows
@@ -105,7 +107,7 @@ bindsym $mod+Shift+plus scratchpad show
 # Float window and pin in to top-right corner (1920x1080)
 bindsym $mod+Shift+s sticky toggle
 bindsym $mod+y fullscreen disable; floating enable; resize set 400 300; sticky enable;\
-move window to position 1515 20
+move window to position 1520 20
 
 # Switch to X workspace
 bindsym $mod+1 workspace $ws1
@@ -162,7 +164,6 @@ bindsym $mod+r mode "$mode_resize"
 ## Power menu
 # Dependencies:
 # https://github.com/Arcaena/i3lock-color
-# https://github.com/meskarune/i3lock-fancy
 # pm-utils
 set $mode_power \
 <span>        </span>\
@@ -170,6 +171,7 @@ set $mode_power \
 <span foreground='white'>L</span>ock \
 <span foreground='white'>E</span>xit \
 <span foreground='white'>S</span>uspend \
+<span foreground='white'>H</span>ibernate \
 <span foreground='white'>R</span>eboot \
 <span foreground='white'>P</span>oweroff
 mode --pango_markup "$mode_power" {
@@ -177,8 +179,7 @@ mode --pango_markup "$mode_power" {
   bindsym e mode "default", exec --no-startup-id ~/.i3/scripts/i3exit logout
   bindsym s mode "default", exec --no-startup-id ~/.i3/scripts/i3exit lock &&\
   ~/.i3/scripts/i3exit suspend
-  bindsym h mode "default", exec --no-startup-id ~/.i3/scripts/i3exit lock &&\
-  ~/.i3/scripts/i3exit hibernate
+  bindsym h mode "default", exec --no-startup-id ~/.i3/scripts/i3exit hibernate
   bindsym r mode "default", exec --no-startup-id ~/.i3/scripts/i3exit reboot
   bindsym p mode "default", exec --no-startup-id ~/.i3/scripts/i3exit shutdown
 
@@ -196,59 +197,77 @@ for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 for_window [instance="__scratchpad"] floating enable
-for_window [class="(?i)pavucontrol"] floating enable, move position mouse
+for_window [class="(?i)pavucontrol"] floating enable
 for_window [class="(?i)lxappearance"] floating enable
 for_window [class="(?i)galculator"] floating enable
-for_window [class="(?i)VirtualBox" title="(?i)Manager"] floating enable
+# Steam
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings$"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
 
-# Window border width
-new_float               pixel 4
-new_window              pixel 4
+
+# Disable titlebars, set window border
+set $borderWidth 4
+for_window [class="^.*"] border pixel $borderWidth
+new_window pixel $borderWidth
 
 # Default workspaces
-assign [class="(?i)syncthing"]                    $ws7
-# Music
-assign [class="(?i)clementine"]                   $ws9
-assign [class="(?i)spotify"]                      $ws9
-assign [class="(?i)blockify-ui"]                  $ws9
-assign [class="(?i)termite" window_role="ncmpcpp"] $ws9
+assign [class="(?i)syncthing"]                    $ws6
+# OpenGL games
+assign [title="OpenGL"]                           $ws7
 # Comms/Torrent
 assign [class="(?i)pidgin"]                       $ws8
 assign [class="(?i)TeamSpeak 3"]                  $ws8
 assign [class="(?i)qbittorrent"]                  $ws8
-# Games
-assign [class="(?i)csgo_linux"]                   $ws6
-assign [class="(?i)insurgency_linux"]             $ws6
-assign [class="(?i)steam"]                        $ws10
+# Music
+assign [class="(?i)clementine"]                   $ws9
+assign [class="(?i)spotify"]                      $ws9
+assign [class="(?i)blockify-ui"]                  $ws9
+assign [class="(?i)firefox"]                      $ws9
+# Steam
+assign [class="(?)Steam"]                         $ws10
 
 
 # Startup programs
 exec --no-startup-id numlockx &
-exec --no-startup-id compton --config ~/.config/compton/compton.conf &
+exec --no-startup-id compton -b --config ~/.config/compton/compton.conf &
 exec --no-startup-id dunst -config file ~/.config/dunst/dunstrc &
 exec --no-startup-id redshift &
 exec --no-startup-id anamnesis --start &
-exec --no-startup-id nm-applet &
-exec --no-startup-id menutray -g -i
+exec --no-startup-id nm-applet
+#exec --no-startup-id menutray -g -i
 
 # One wallpaper or change between several on restart
-exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/KDE/*
+exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/Wallpapers/rotation/*
 #exec_always --no-startup-id feh --bg-fill ~/Pictures/Wallpapers/guq95s2.jpg
 
 # Screenshots
-bindsym --release Print exec "maim -p 0 -c 0.96,0.5,0.09 ~/Pictures/Screenshots/screenshot-\
+bindsym --release Print exec "maim -p 0 ~/Pictures/Screenshots/screenshot-\
 $(date +%Y-%m-%d_%H-%M-%S).png"
-bindsym --release Shift+Print exec "maim -s -p 0 -c 0.96,0.5,0.09 ~/Pictures/Screenshots/\
+bindsym --release Shift+Print exec "maim -s -p 0 -c 0.72,0.108,0.108 ~/Pictures/Screenshots/\
 screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
 
 # Keybingings for opening WEB browser / File browser
-bindsym $mod+n exec --no-startup-id nemo
+bindsym $mod+n exec --no-startup-id thunar
 bindsym $mod+b exec --no-startup-id chromium
+
+# Reduce/increase volume
+# Requires https://github.com/graysky2/pulseaudio-ctl
+bindsym $super+Up exec --no-startup-id "pulseaudio-ctl up 5; pkill -SIGRTMIN+1 i3blocks"
+bindsym $super+Down exec --no-startup-id "pulseaudio-ctl down 5; pkill -SIGRTMIN+1 i3blocks"
+bindsym $super+Left exec --no-startup-id "pulseaudio-ctl mute; pkill -SIGRTMIN+1 i3blocks"
+bindsym $super+Right exec --no-startup-id "pulseaudio-ctl mute-input; pkill -SIGRTMIN+1 i3blocks"
 
 ########################################## i3bar settings ##########################################
 
 bar {
-  status_command i3blocks -c ~/.i3/i3blocks/.i3blocks.conf
+  status_command i3blocks -c ~/.i3/i3blocks/i3blocks.conf
   i3bar_command i3bar
   position top
   separator_symbol "|"
@@ -256,7 +275,7 @@ bar {
   tray_output VGA-0
   tray_padding 0
   height 20
-  font pango: Terminus 13
+  font pango: Terminus 11
 
   colors
   {

@@ -1,26 +1,15 @@
 {
   "rules": {
-    "indent": [
-      2,
-      2
-    ],
-    "quotes": [
-      2,
-      "single"
-    ],
-    "linebreak-style": [
-      2,
-      "unix"
-    ],
-    "semi": [
-      2,
-      "always"
-    ],
-    "space-in-parens": ["error", "never"],
-    "arrow-body-style": [2, "as-needed"]
+    "indent": ["warn", 2],
+    "quotes": ["warn", "single"],
+    "linebreak-style": ["warn", "unix"],
+    "semi": ["warn", "always"],
+    "space-in-parens": ["warn", "never"],
+    "array-bracket-spacing": ["warn", "never"],
+    "computed-property-spacing": ["warn", "never"],
+    "arrow-body-style": ["warn", "as-needed"]
   },
   "env": {
-    "es6": true,
     "jquery": true,
     "browser": true
   },

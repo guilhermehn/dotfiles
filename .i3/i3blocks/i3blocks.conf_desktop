@@ -1,0 +1,73 @@
+command=$HOME/.i3/i3blocks/scripts/$BLOCK_NAME
+markup=pango
+separator_block_width=15
+border=#2E7D32
+border_bottom=1
+border_right=0
+border_left=0
+border_top=0
+
+[title]
+command=xtitle -s | ~/.i3/scripts/truncate.py
+interval=persist
+
+[mail]
+label=
+instance=~/.gmx-private
+interval=60
+
+[weather]
+interval=300
+
+[ssid]
+label=
+separator_block_width=0
+interval=60
+
+[iface]
+label= -
+#instance=wlan0
+interval=10
+
+[bandwidth]
+command=~/.i3/i3blocks/scripts/bandwidth -u KB
+label= 
+interval=persist
+
+#[display]
+#label=
+#interval=5
+
+[cpu]
+label=
+interval=1
+min_width=100.0%
+
+[memory]
+label=
+interval=5
+
+[audio-pavucontrol]
+command=echo " "; [[ -z "${BLOCK_BUTTON}" ]] || pavucontrol
+interval=once
+separator=false
+separator_block_width=0
+
+[audio]
+interval=once
+signal=1
+min_width=100%
+
+[calendar]
+command=echo " "; [[ -z "${BLOCK_BUTTON}" ]] || gsimplecal
+separator_block_width=0
+interval=once
+
+[date]
+command=date '+%a %d-%m-%y'
+interval=60
+
+[time]
+label=
+command=date '+%H:%M'
+interval=1
