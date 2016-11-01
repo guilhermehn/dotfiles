@@ -1,13 +1,8 @@
 command=~/.i3/i3blocks/scripts/$BLOCK_NAME
 markup=pango
 separator_block_width=15
-border=#2E7D32
-border_bottom=1
-border_right=0
-border_left=0
-border_top=0
 
-[window]
+[title]
 command=xtitle -s | ~/.i3/scripts/truncate.py
 interval=persist
 
@@ -17,7 +12,7 @@ instance=~/.gmx-private
 interval=60
 
 [weather]
-interval=60
+interval=150
 
 [ssid]
 label=
@@ -27,20 +22,31 @@ interval=60
 [iface]
 label= -
 #instance=wlan0
-interval=10
+interval=60
 
 [bandwidth]
-command=~/.i3/i3blocks/scripts/bandwidth -u KB
-label= 
+command=~/.i3/i3blocks/scripts/bandwidth -u MB
 interval=persist
+
+#[display]
+#label=
+#interval=5
 
 [cpu]
 label=
 interval=2
-min_width=100.0%
+min_width=100%
 
 [memory]
 label=
+instance=mem;used
+interval=5
+separator=false
+separator_block_width=0
+
+[memory]
+label= - 
+instance=swap;used
 interval=5
 
 [audio-pavucontrol]
@@ -61,7 +67,7 @@ signal=2
 min_width= 100%
 
 [battery]
-label=
+label= 
 interval=5
 
 [calendar]
