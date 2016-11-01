@@ -19,4 +19,4 @@ Core dotfiles from Arch Linux my workstation
 
 Some of dotfiles are based on Airblader's config (https://github.com/Airblader/dotfiles-manjaro)
 
-![Example screenshot](https://i.imgur.com/xJ4Sh5C.jpg)
+![Example screenshot](https://i.imgur.com/BbhiT9T.png)
