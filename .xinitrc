@@ -19,11 +19,14 @@ fi
 # GTK style for QT applications
 export QT_QPA_PLATFORMTHEME='gtk2'
 
-# LV keyboard layout with diacritics under apostrophe key
+# Latvian keyboard layout with diacritics under apostrophe key
 setxkbmap -layout lv -variant apostrophe -option ctrl:nocaps
 
 # Disable mouse acceleration
 xset m 0 0
+
+# Hide mouse cursor after not using it for 5s
+unclutter &
 
 # Start WM
 exec i3
