@@ -64,7 +64,9 @@ client.background       $black
 # Enable $mod+Mouse dragging floating windows
 floating_modifier $mod
 
+# Launch terminal. Alternatively launch it in floating mode for temporary stuff like pass.
 bindsym $mod+Return exec termite
+bindsym $mod+Shift+Return exec termite -t float
 
 # Close selected window
 bindsym $mod+Shift+q kill
@@ -201,6 +203,7 @@ for_window [instance="__scratchpad"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable
 for_window [class="(?i)lxappearance"] floating enable
 for_window [class="(?i)galculator"] floating enable
+for_window [class="(?i)termite" title="float"] floating enable, move position mouse
 # Steam
 for_window [class="^Steam$" title="Steam - News"] floating enable
 for_window [class="^Steam$" title=".* - Chat"] floating enable
